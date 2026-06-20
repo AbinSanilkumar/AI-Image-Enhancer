@@ -1,7 +1,12 @@
+import os
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ai.enhancer import enhance_image
+
+from .models import UploadedImage
 from .serializers import UploadedImageSerializer
 
 
@@ -15,17 +20,31 @@ class TestAPIView(APIView):
 class ImageUploadAPIView(APIView):
 
 	def post(self, request):
-		serializer = UploadedImageSerializer(data=request.data)
+		image = request.FILES.get("image")
 
-		if serializer.is_valid():
-			serializer.save()
+		obj = UploadedImage.objects.create(
+			original_image=image
+		)
 
-			return Response(
-				serializer.data,
-				status=status.HTTP_201_CREATED
-			)
+		enhanced_path = enhance_image(
+			obj.original_image.path
+		)
+
+		relative_path = enhanced_path.replace(
+			"media\\",
+			""
+		).replace(
+			"media/",
+			""
+		)
+
+		obj.enhanced_image = relative_path
+
+		obj.save()
+
+		serializer = UploadedImageSerializer(obj)
 
 		return Response(
-			serializer.errors,
-			status=status.HTTP_400_BAD_REQUEST
+			serializer.data,
+			status=status.HTTP_201_CREATED
 		)

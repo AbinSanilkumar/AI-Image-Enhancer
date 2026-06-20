@@ -1,8 +1,20 @@
 from django.db import models
 
+
 class UploadedImage(models.Model):
-    image = models.ImageField(upload_to='uploads/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    original_image = models.ImageField(
+        upload_to="uploads/"
+    )
+
+    enhanced_image = models.ImageField(
+        upload_to="enhanced/",
+        blank=True,
+        null=True
+    )
+
+    uploaded_at = models.DateTimeField(
+        auto_now_add=True
+    )
 
     def __str__(self):
         return str(self.id)

@@ -3,6 +3,7 @@ import axios from "axios";
 
 function App() {
   const [image, setImage] = useState(null);
+  const [result, setResult] = useState(null);
 
   const uploadImage = async () => {
     const formData = new FormData();
@@ -13,7 +14,7 @@ function App() {
       formData
     );
 
-    console.log(response.data);
+    setResult(response.data);
   };
 
   return (
@@ -26,8 +27,19 @@ function App() {
       />
 
       <button onClick={uploadImage}>
-        Upload
+        Enhance Image
       </button>
+
+      {result && (
+        <div>
+          <h3>Enhanced Image</h3>
+
+          <img
+            src={`http://127.0.0.1:8000${result.enhanced_image}`}
+            width="400"
+          />
+        </div>
+      )}
     </div>
   )
 }
