@@ -253,3 +253,5 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+# External AI Repositories
+ai_models/Real-ESRGAN/
