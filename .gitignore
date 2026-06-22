@@ -216,3 +216,40 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# =========================
+# AI Image Enhancer Project
+# =========================
+
+# Model weights
+model_weights/
+*.pth
+*.ckpt
+*.onnx
+
+# Generated media
+backend/media/
+media/
+outputs/
+
+# Sample/Test Images
+sample_images/
+test_images/
+
+# Logs
+logs/
+*.log
+
+# Frontend
+frontend/node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Temporary files
+*.tmp
+*.temp
