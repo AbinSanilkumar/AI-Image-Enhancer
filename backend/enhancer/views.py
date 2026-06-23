@@ -11,40 +11,53 @@ from .serializers import UploadedImageSerializer
 
 
 class TestAPIView(APIView):
-	def get(self, request):
-		return Response({
-			"message": "Backend working"
-		})
+    def get(self, request):
+        return Response({
+            "message": "Backend working"
+        })
 
 
 class ImageUploadAPIView(APIView):
 
-	def post(self, request):
-		image = request.FILES.get("image")
+    def post(self, request):
 
-		obj = UploadedImage.objects.create(
-			original_image=image
-		)
+        try:
+            image = request.FILES.get("image")
 
-		enhanced_path = enhance_image(
-			obj.original_image.path
-		)
+            if not image:
+                return Response(
+                    {"error": "No image uploaded"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
-		relative_path = enhanced_path.replace(
-			"media\\",
-			""
-		).replace(
-			"media/",
-			""
-		)
+            obj = UploadedImage.objects.create(
+                original_image=image
+            )
 
-		obj.enhanced_image = relative_path
+            enhanced_path = enhance_image(
+                obj.original_image.path
+            )
 
-		obj.save()
+            relative_path = enhanced_path.replace(
+                "media\\",
+                ""
+            ).replace(
+                "media/",
+                ""
+            )
 
-		serializer = UploadedImageSerializer(obj)
+            obj.enhanced_image = relative_path
+            obj.save()
 
-		return Response(
-			serializer.data,
-			status=status.HTTP_201_CREATED
-		)
+            serializer = UploadedImageSerializer(obj)
+
+            return Response({
+                "message": "Image enhanced successfully",
+                "data": serializer.data
+            })
+
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
