@@ -1,5 +1,5 @@
-import os
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -11,8 +11,6 @@ OUTPUT_DIR = BASE_DIR / "backend" / "media" / "enhanced"
 
 def upscale_image(image_path):
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    import sys
 
     command = [
         sys.executable,
@@ -36,8 +34,22 @@ def upscale_image(image_path):
     print(result.stdout)
     print(result.stderr)
 
+    if result.returncode != 0:
+        raise Exception(
+            f"Real-ESRGAN failed:\n{result.stderr}"
+        )
+
     filename = Path(image_path).stem
 
-    output_image = OUTPUT_DIR / f"{filename}_out.png"
+    generated_files = list(
+        OUTPUT_DIR.glob(f"{filename}*")
+    )
 
-    return str(output_image)
+    if not generated_files:
+        raise Exception(
+            "Real-ESRGAN output image not found"
+        )
+
+    print("Generated:", generated_files[0])
+
+    return str(generated_files[0])
