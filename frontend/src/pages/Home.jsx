@@ -1,7 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import UploadBox from "../components/UploadBox";
+import Features from "../components/Features";
 import ImageComparison from "../components/ImageComparison";
 import Loader from "../components/Loader";
 
@@ -49,50 +52,59 @@ function Home() {
   };
 
   return (
-    <div className="home-container">
+    <>
+      <Navbar />
 
-      <h1 className="title">
-        AI Image Enhancer
-      </h1>
+      <div className="home-container">
 
-      <p className="subtitle">
-        Enhance blurry images using Real-ESRGAN AI
-      </p>
+        <h1 className="title">
+          AI Image Enhancer
+        </h1>
 
-      <UploadBox
-        onChange={handleFileChange}
-      />
+        <p className="subtitle">
+          Transform low-resolution and blurry images into sharp,
+          high-quality visuals using the power of Real-ESRGAN deep learning.
+        </p>
 
-      {file && (
-        <button
-          className="enhance-btn"
-          onClick={handleUpload}
-        >
-          Enhance Image
-        </button>
-      )}
+        <UploadBox
+          onChange={handleFileChange}
+        />
 
-      {loading && <Loader />}
+        <Features />
 
-      {original && enhanced && (
-        <>
-          <ImageComparison
-            original={original}
-            enhanced={enhanced}
-          />
-
-          <a
-            href={enhanced}
-            target="_blank"
-            rel="noreferrer"
-            className="download-btn"
+        {file && (
+          <button
+            className="enhance-btn"
+            onClick={handleUpload}
           >
-            Download HD Image
-          </a>
-        </>
-      )}
+            Enhance Image
+          </button>
+        )}
 
-    </div>
+        {loading && <Loader />}
+
+        {original && enhanced && (
+          <>
+            <ImageComparison
+              original={original}
+              enhanced={enhanced}
+            />
+
+            <a
+              href={enhanced}
+              target="_blank"
+              rel="noreferrer"
+              className="download-btn"
+            >
+              Download HD Image
+            </a>
+          </>
+        )}
+
+      </div>
+
+      <Footer />
+    </>
   );
 }
 

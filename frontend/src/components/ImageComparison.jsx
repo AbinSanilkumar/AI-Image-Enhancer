@@ -5,21 +5,21 @@ function ImageComparison({
   return (
     <div className="comparison-container">
 
-      <div>
-        <h2>Original</h2>
+      <div className="image-card">
+        <h3>Original Image</h3>
 
         <img
           src={original}
-          alt="original"
+          alt="Original"
         />
       </div>
 
-      <div>
-        <h2>Enhanced</h2>
+      <div className="image-card">
+        <h3>Enhanced Image</h3>
 
         <img
           src={enhanced}
-          alt="enhanced"
+          alt="Enhanced"
         />
       </div>
 
