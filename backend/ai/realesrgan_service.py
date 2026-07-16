@@ -28,8 +28,7 @@ def upscale_image(image_path):
         command,
         cwd=REAL_ESRGAN_DIR,
         capture_output=True,
-        text=True,
-        check=False
+        text=True
     )
 
     print(result.stdout)
