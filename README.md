@@ -18,9 +18,6 @@ An AI-powered image enhancement web application built with **React**, **Django R
 
 ![Result](docs/result.png)
 
-### System Architecture
-
-![Architecture](docs/architecture.png)
 
 ---
 
@@ -83,7 +80,7 @@ AI-Image-Enhancer
 │   ├── home.png
 │   ├── upload.png
 │   ├── result.png
-│   └── architecture.png
+│   
 │
 ├── .gitignore
 ├── LICENSE
