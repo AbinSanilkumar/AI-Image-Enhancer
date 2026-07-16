@@ -7,6 +7,9 @@ import UploadBox from "../components/UploadBox";
 import Features from "../components/Features";
 import ImageComparison from "../components/ImageComparison";
 
+// Read backend URL from Vercel environment variable
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Home() {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
@@ -41,24 +44,31 @@ function Home() {
     if (!file) return;
 
     const formData = new FormData();
-
     formData.append("image", file);
 
     setLoading(true);
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/upload/",
-        formData
+        `${API_URL}/api/upload/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       setEnhanced(
-        "http://127.0.0.1:8000" +
-        response.data.data.enhanced_image
+        `${API_URL}${response.data.data.enhanced_image}`
       );
 
     } catch (error) {
-      console.error(error);
+      console.error("Upload failed:", error);
+
+      if (error.response) {
+        console.error(error.response.data);
+      }
     } finally {
       setLoading(false);
     }
