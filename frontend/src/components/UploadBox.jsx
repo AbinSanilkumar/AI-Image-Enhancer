@@ -1,6 +1,6 @@
 import { FaCloudUploadAlt } from "react-icons/fa";
 
-function UploadBox({ onChange }) {
+function UploadBox({ onChange, loading, children }) {
   return (
     <label className="upload-box">
       <FaCloudUploadAlt size={70} />
@@ -20,8 +20,11 @@ function UploadBox({ onChange }) {
       <input
         type="file"
         hidden
+        disabled={loading}
         onChange={onChange}
       />
+
+      {children}
     </label>
   );
 }

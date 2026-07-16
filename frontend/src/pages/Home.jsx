@@ -6,22 +6,35 @@ import Footer from "../components/Footer";
 import UploadBox from "../components/UploadBox";
 import Features from "../components/Features";
 import ImageComparison from "../components/ImageComparison";
-import Loader from "../components/Loader";
 
 function Home() {
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
+  const [fileSize, setFileSize] = useState("");
+  const [resolution, setResolution] = useState("");
   const [original, setOriginal] = useState("");
   const [enhanced, setEnhanced] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleReset = () => {
+    setFile(null);
+    setOriginal("");
+    setEnhanced("");
 
-    if (e.target.files[0]) {
-      setOriginal(
-        URL.createObjectURL(e.target.files[0])
-      );
-    }
+    setFileName("");
+    setFileSize("");
+    setResolution("");
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+
+    link.href = enhanced;
+    link.download = "enhanced-image.jpg";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleUpload = async () => {
@@ -46,9 +59,9 @@ function Home() {
 
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -67,21 +80,75 @@ function Home() {
         </p>
 
         <UploadBox
-          onChange={handleFileChange}
-        />
+          loading={loading}
+          onChange={(e) => {
 
-        <Features />
+            const selectedFile = e.target.files[0];
 
-        {file && (
-          <button
-            className="enhance-btn"
-            onClick={handleUpload}
-          >
-            Enhance Image
-          </button>
+            if (!selectedFile) return;
+
+            setFile(selectedFile);
+
+            setFileName(selectedFile.name);
+
+            setFileSize(
+              (selectedFile.size / (1024 * 1024)).toFixed(2) + " MB"
+            );
+
+            const img = new Image();
+
+            img.onload = () => {
+              setResolution(
+                `${img.width} × ${img.height}`
+              );
+            };
+
+            img.src = URL.createObjectURL(selectedFile);
+
+            setOriginal(
+              URL.createObjectURL(selectedFile)
+            );
+
+            setEnhanced("");
+
+          }}
+        >
+          {file && (
+            <div className="file-info">
+
+              <h3>Selected Image</h3>
+
+              <p><strong>Name:</strong> {fileName}</p>
+
+              <p><strong>Size:</strong> {fileSize}</p>
+
+              <p><strong>Resolution:</strong> {resolution}</p>
+
+            </div>
+          )}
+        </UploadBox>
+
+        <button
+          className="enhance-btn"
+          onClick={handleUpload}
+          disabled={!file || loading}
+        >
+          {loading ? "Enhancing..." : "Enhance Image"}
+        </button>
+
+        {loading && (
+          <div className="loader-container">
+            <div className="loader"></div>
+
+            <p className="loading-text">
+              Enhancing your image...
+            </p>
+
+            <small>
+              This may take a few moments.
+            </small>
+          </div>
         )}
-
-        {loading && <Loader />}
 
         {original && enhanced && (
           <>
@@ -90,16 +157,27 @@ function Home() {
               enhanced={enhanced}
             />
 
-            <a
-              href={enhanced}
-              target="_blank"
-              rel="noreferrer"
-              className="download-btn"
-            >
-              Download HD Image
-            </a>
+            <div className="button-group">
+
+              <button
+                className="download-btn"
+                onClick={handleDownload}
+              >
+                Download HD Image
+              </button>
+
+              <button
+                className="reset-btn"
+                onClick={handleReset}
+              >
+                Enhance Another Image
+              </button>
+
+            </div>
           </>
         )}
+
+        <Features />
 
       </div>
 
