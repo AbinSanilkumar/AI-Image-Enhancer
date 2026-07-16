@@ -1,14 +1,35 @@
 # AI Image Enhancer
 
-An AI-powered image enhancement platform built using **React**, **Django**, and **Real-ESRGAN**. The application restores blurry and low-resolution images into high-quality versions using deep learning.
+An AI-powered image enhancement web application built with **React**, **Django REST Framework**, and **Real-ESRGAN**. The application restores blurry and low-resolution images into high-quality versions using deep learning.
+
+---
+
+## Preview
+
+### Home Page
+
+![Home](docs/home.png)
+
+### Upload Image
+
+![Upload](docs/upload.png)
+
+### Enhancement Result
+
+![Result](docs/result.png)
+
+### System Architecture
+
+![Architecture](docs/architecture.png)
 
 ---
 
 ## Features
 
-- AI-powered image upscaling using Real-ESRGAN
+- AI-powered image enhancement using Real-ESRGAN
 - Drag & Drop image upload
-- Instant image enhancement
+- Image preview before enhancement
+- Image information (name, size, resolution)
 - Side-by-side image comparison
 - Download enhanced HD image
 - Responsive modern UI
@@ -30,7 +51,7 @@ An AI-powered image enhancement platform built using **React**, **Django**, and 
 - Django REST Framework
 - Python
 
-### AI Model
+### AI / Image Processing
 - Real-ESRGAN
 - PyTorch
 - OpenCV
@@ -40,50 +61,56 @@ An AI-powered image enhancement platform built using **React**, **Django**, and 
 ## Project Structure
 
 ```
-AI-Image-Enhancer/
+AI-Image-Enhancer
+│
+├── ai_models/
 │
 ├── backend/
 │   ├── ai/
-│   ├── enhancer/
 │   ├── config/
+│   ├── enhancer/
 │   ├── media/
-│   └── manage.py
+│   ├── manage.py
+│   └── requirements.txt
 │
 ├── frontend/
-│   ├── src/
 │   ├── public/
-│   └── package.json
-│
-├── ai_models/
-│   └── Real-ESRGAN/
+│   ├── src/
+│   ├── package.json
+│   └── ...
 │
 ├── docs/
+│   ├── home.png
+│   ├── upload.png
+│   ├── result.png
+│   └── architecture.png
 │
-├── sample_images/
-│
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
 ---
 
-## Screenshots
-
-### Home Page
-
-> Add screenshot here
+## How It Works
 
 ```
-docs/home.png
-```
-
----
-
-### Upload & Enhancement
-
-> Add screenshot here
-
-```
-docs/result.png
+User Uploads Image
+        │
+        ▼
+React Frontend
+        │
+        ▼
+Django REST API
+        │
+        ▼
+Real-ESRGAN Model
+        │
+        ▼
+Enhanced Image Generated
+        │
+        ▼
+Returned to Frontend
 ```
 
 ---
@@ -118,7 +145,7 @@ Run migrations
 python manage.py migrate
 ```
 
-Start Django
+Start the server
 
 ```bash
 python manage.py runserver
@@ -146,59 +173,35 @@ npm run dev
 POST /api/upload/
 ```
 
-Form Data
+**Form Data**
 
 ```
 image : File
 ```
 
-Example Response
+**Sample Response**
 
 ```json
 {
-    "message": "Image enhanced successfully",
-    "data": {
-        "original_image": "...",
-        "enhanced_image": "..."
-    }
+  "message": "Image enhanced successfully",
+  "data": {
+    "original_image": "...",
+    "enhanced_image": "..."
+  }
 }
-```
-
----
-
-## Workflow
-
-```
-User Uploads Image
-          │
-          ▼
-React Frontend
-          │
-          ▼
-Django REST API
-          │
-          ▼
-Real-ESRGAN Model
-          │
-          ▼
-Enhanced Image Generated
-          │
-          ▼
-Returned to Frontend
 ```
 
 ---
 
 ## Future Improvements
 
-- User Authentication
-- Enhancement History
-- Image Gallery
-- Batch Image Processing
-- Multiple AI Models
-- Before/After Slider
-- GPU Acceleration
-- Docker Deployment
+- User authentication
+- Enhancement history
+- Batch image enhancement
+- Multiple AI models
+- Image comparison slider
+- Docker support
+- GPU deployment
 
 ---
 
@@ -212,13 +215,9 @@ This project is licensed under the MIT License.
 
 **Abin Sanil Kumar**
 
-GitHub
+GitHub: https://github.com/AbinSanilkumar
 
-https://github.com/AbinSanilkumar
-
-LinkedIn
-
-(Add your LinkedIn URL)
+LinkedIn: *(Add your LinkedIn profile here)*
 
 ---
 
