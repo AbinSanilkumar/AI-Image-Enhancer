@@ -9,6 +9,7 @@ import ImageComparison from "../components/ImageComparison";
 
 // Read backend URL from Vercel environment variable
 const API_URL = import.meta.env.VITE_API_URL;
+console.log("API_URL =", API_URL);
 
 function Home() {
   const [file, setFile] = useState(null);
