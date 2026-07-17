@@ -3,7 +3,9 @@
 set -o errexit
 
 echo "Installing backend dependencies..."
+pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
+
 
 echo "Cloning Real-ESRGAN..."
 mkdir -p ../ai_models
