@@ -6,7 +6,6 @@ echo "Installing backend dependencies..."
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 
-
 echo "Cloning Real-ESRGAN..."
 mkdir -p ../ai_models
 
@@ -15,9 +14,6 @@ if [ ! -d "../ai_models/Real-ESRGAN" ]; then
 fi
 
 cd ../ai_models/Real-ESRGAN
-
-echo "Checking out tested version..."
-git checkout a4abfb2979a7bbff3f69f58f58ae324608821e27
 
 echo "Installing Real-ESRGAN..."
 python setup.py develop
