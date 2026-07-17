@@ -16,7 +16,7 @@ fi
 cd ../ai_models/Real-ESRGAN
 
 echo "Installing Real-ESRGAN..."
-python setup.py develop
+pip install -e .
 
 echo "Downloading model weights..."
 mkdir -p weights
