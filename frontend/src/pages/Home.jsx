@@ -7,6 +7,8 @@ import UploadBox from "../components/UploadBox";
 import Features from "../components/Features";
 import ImageComparison from "../components/ImageComparison";
 
+const API_URL = "https://ai-image-enhancer-i637.onrender.com";
+
 function Home() {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
@@ -41,24 +43,22 @@ function Home() {
     if (!file) return;
 
     const formData = new FormData();
-
     formData.append("image", file);
 
     setLoading(true);
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/upload/",
+        `${API_URL}/api/upload/`,
         formData
       );
 
       setEnhanced(
-        "http://127.0.0.1:8000" +
-        response.data.data.enhanced_image
+        API_URL + response.data.data.enhanced_image
       );
 
     } catch (error) {
-      console.error(error);
+      console.error("Upload failed:", error);
     } finally {
       setLoading(false);
     }
