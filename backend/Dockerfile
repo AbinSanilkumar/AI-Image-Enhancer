@@ -21,9 +21,9 @@ WORKDIR /app/ai_models/Real-ESRGAN
 
 RUN pip install -e .
 
-# Force NumPy back to the version compatible with Torch + BasicSR
-RUN pip install --no-cache-dir --force-reinstall numpy==1.26.4
-
+RUN pip install --no-cache-dir --force-reinstall \
+    numpy==1.26.4 \
+    scipy==1.11.4
 RUN mkdir -p weights && \
     python - <<EOF
 import urllib.request
