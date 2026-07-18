@@ -24,11 +24,10 @@ def upscale_image(image_path):
     ]
 
     result = subprocess.run(
-        command,
-        cwd=REAL_ESRGAN_DIR,
-        capture_output=True,
-        text=True
-    )
+    command,
+    cwd=REAL_ESRGAN_DIR,
+    text=True
+)
 
     print(result.stdout)
     print(result.stderr)
