@@ -3,10 +3,9 @@ import sys
 from pathlib import Path
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 REAL_ESRGAN_DIR = BASE_DIR / "ai_models" / "Real-ESRGAN"
-OUTPUT_DIR = BASE_DIR / "backend" / "media" / "enhanced"
+OUTPUT_DIR = BASE_DIR / "media" / "enhanced"
 
 
 def upscale_image(image_path):
