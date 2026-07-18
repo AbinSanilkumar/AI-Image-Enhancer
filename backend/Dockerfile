@@ -21,9 +21,30 @@ WORKDIR /app/ai_models/Real-ESRGAN
 
 RUN pip install -e .
 
+# Patch BasicSR for newer torchvision versions
+RUN python - <<EOF
+from pathlib import Path
+
+file = Path("/usr/local/lib/python3.12/site-packages/basicsr/data/degradations.py")
+
+text = file.read_text()
+
+text = text.replace(
+    "from torchvision.transforms.functional_tensor import rgb_to_grayscale",
+    "from torchvision.transforms.functional import rgb_to_grayscale"
+)
+
+file.write_text(text)
+
+print("BasicSR patched successfully")
+EOF
+
+# Pin compatible NumPy and SciPy versions
 RUN pip install --no-cache-dir --force-reinstall \
     numpy==1.26.4 \
     scipy==1.11.4
+
+# Download Real-ESRGAN model weights
 RUN mkdir -p weights && \
     python - <<EOF
 import urllib.request
