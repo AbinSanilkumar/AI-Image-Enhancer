@@ -21,21 +21,8 @@ WORKDIR /app/ai_models/Real-ESRGAN
 
 RUN pip install -e .
 
-# Real-ESRGAN upgrades NumPy to 2.x.
-# Force NumPy back to the version compatible with Torch + BasicSR.
+# Force NumPy back to the version compatible with Torch + BasicSR
 RUN pip install --no-cache-dir --force-reinstall numpy==1.26.4
-
-RUN python - <<EOF
-import torch
-import torchvision
-import basicsr
-
-print("=" * 60)
-print("Torch       :", torch.__version__)
-print("Torchvision :", torchvision.__version__)
-print("BasicSR     :", getattr(basicsr, "__version__", "Unknown"))
-print("=" * 60)
-EOF
 
 RUN mkdir -p weights && \
     python - <<EOF
