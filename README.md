@@ -2,75 +2,98 @@
 
 An AI-powered image enhancement web application built with **React**, **Django REST Framework**, and **Real-ESRGAN**. The application restores blurry and low-resolution images into high-quality versions using deep learning.
 
+---
+
+# Live Demo
+
+**Frontend (Vercel)**
+
 https://ai-image-enhancer-flame.vercel.app/
+
+> **Note**
+>
+> The frontend is deployed on Vercel.
+> The AI enhancement pipeline is fully functional in the local development environment.
+> Cloud deployment for AI inference is currently under optimization due to resource limitations on free hosting platforms.
 
 ---
 
-## Preview
+# Preview
 
-### Home Page
+## Home Page
 
 ![Home](docs/home.png)
 
-### Upload Image
+## Upload Image
 
 ![Upload](docs/upload.png)
 
-### Enhancement Result
+## Enhancement Result
 
 ![Result](docs/result.png)
 
-
 ---
 
-## Features
+# Features
 
 - AI-powered image enhancement using Real-ESRGAN
 - Drag & Drop image upload
 - Image preview before enhancement
-- Image information (name, size, resolution)
+- Image metadata (name, size, resolution)
 - Side-by-side image comparison
-- Download enhanced HD image
+- Download enhanced image
 - Responsive modern UI
-- Django REST API backend
-- React frontend
+- RESTful API built with Django REST Framework
+- Dockerized backend for reproducible deployment
 
 ---
 
-## Tech Stack
+# Tech Stack
 
-### Frontend
-- React.js
+## Frontend
+
+- React
+- Vite
 - Axios
 - CSS3
 - React Icons
 
-### Backend
+## Backend
+
 - Django
 - Django REST Framework
-- Python
+- Gunicorn
 
-### AI / Image Processing
+## AI / Computer Vision
+
 - Real-ESRGAN
 - PyTorch
 - OpenCV
+- BasicSR
+
+## DevOps
+
+- Docker
+- Vercel (Frontend)
+- Render (Backend Testing)
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
 AI-Image-Enhancer
 │
-├── ai_models/
-│
 ├── backend/
 │   ├── ai/
+│   ├── ai_models/
 │   ├── config/
 │   ├── enhancer/
 │   ├── media/
+│   ├── Dockerfile
 │   ├── manage.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── runtime.txt
 │
 ├── frontend/
 │   ├── public/
@@ -81,8 +104,7 @@ AI-Image-Enhancer
 ├── docs/
 │   ├── home.png
 │   ├── upload.png
-│   ├── result.png
-│   
+│   └── result.png
 │
 ├── .gitignore
 ├── LICENSE
@@ -91,32 +113,34 @@ AI-Image-Enhancer
 
 ---
 
-## How It Works
+# Architecture
 
 ```
-User Uploads Image
-        │
-        ▼
-React Frontend
-        │
-        ▼
-Django REST API
-        │
-        ▼
-Real-ESRGAN Model
-        │
-        ▼
-Enhanced Image Generated
-        │
-        ▼
-Returned to Frontend
+                 User
+                   │
+                   ▼
+          React + Vite Frontend
+                   │
+             HTTP REST API
+                   │
+                   ▼
+      Django REST Framework Backend
+                   │
+                   ▼
+        Real-ESRGAN Deep Learning Model
+                   │
+                   ▼
+          Enhanced High-Resolution Image
+                   │
+                   ▼
+              Returned to Frontend
 ```
 
 ---
 
-## Installation
+# Installation
 
-### Clone Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/AbinSanilkumar/AI-Image-Enhancer.git
@@ -126,15 +150,29 @@ cd AI-Image-Enhancer
 
 ---
 
-### Backend Setup
+## Backend Setup
 
 ```bash
 cd backend
 
 python -m venv venv
+```
 
+### Windows
+
+```bash
 venv\Scripts\activate
+```
 
+### Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
@@ -144,7 +182,7 @@ Run migrations
 python manage.py migrate
 ```
 
-Start the server
+Start the backend
 
 ```bash
 python manage.py runserver
@@ -152,7 +190,7 @@ python manage.py runserver
 
 ---
 
-### Frontend Setup
+## Frontend Setup
 
 ```bash
 cd frontend
@@ -164,21 +202,37 @@ npm run dev
 
 ---
 
-## API Endpoint
+# API Endpoint
 
-### Upload Image
+## Test API
+
+```
+GET /api/test/
+```
+
+Response
+
+```json
+{
+  "message": "Backend working"
+}
+```
+
+---
+
+## Upload Image
 
 ```
 POST /api/upload/
 ```
 
-**Form Data**
+Form Data
 
 ```
 image : File
 ```
 
-**Sample Response**
+Sample Response
 
 ```json
 {
@@ -192,38 +246,75 @@ image : File
 
 ---
 
-## Future Improvements
+# Docker
 
-- User authentication
-- Enhancement history
-- Batch image enhancement
-- Multiple AI models
-- Image comparison slider
-- Docker support
-- GPU deployment
+Build the Docker image
+
+```bash
+docker build -t ai-image-enhancer .
+```
+
+Run the container
+
+```bash
+docker run -p 8000:8000 ai-image-enhancer
+```
 
 ---
 
-## License
+# Known Limitations
+
+- AI enhancement requires significant CPU/GPU resources.
+- The application is fully functional in the local environment.
+- Free cloud platforms may not provide sufficient resources for deep learning inference.
+- GPU deployment is recommended for production workloads.
+
+---
+
+# Future Improvements
+
+- GPU-accelerated deployment
+- User authentication
+- Enhancement history
+- Batch image enhancement
+- Multiple enhancement models
+- Interactive image comparison slider
+- Cloud storage integration
+- Async task queue using Celery and Redis
+
+---
+
+# License
 
 This project is licensed under the MIT License.
 
 ---
 
-## Author
+# Author
 
 **Abin Sanil Kumar**
 
-GitHub: https://github.com/AbinSanilkumar
+GitHub
 
-LinkedIn: *(Add your LinkedIn profile here)*
+https://github.com/AbinSanilkumar
+
+LinkedIn
+
+*(Add your LinkedIn profile here)*
 
 ---
 
-## Acknowledgements
+# Acknowledgements
 
 - Real-ESRGAN
-- Django
-- React
 - PyTorch
+- BasicSR
+- Django
+- Django REST Framework
+- React
+- Vite
 - OpenCV
+
+---
+
+## ⭐ If you found this project interesting, consider giving it a star on GitHub!
